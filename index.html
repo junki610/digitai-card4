@@ -53,7 +53,7 @@
             height: var(--card-height);
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out; /* 滑らかな追従 */
+            transition: transform 0.1s ease-out;
             cursor: pointer;
             border-radius: 20px;
             box-shadow: 
@@ -79,27 +79,29 @@
             will-change: transform; 
         }
 
-        /* 表面 (情報面: デフォルト表示) */
+        /* 表面 (情報面: デフォルト) - ここを白背景に修正 */
         .card-front {
             background-color: #fff;
             color: #1a1a1a;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        /* 裏面 (ロゴ面: タップで表示) - ここを黒背景に修正 */
+        .card-back {
+            background-color: #000;
+            color: #fff;
+            transform: rotateY(180deg);
+            z-index: 1;
+            display: flex;
             flex-direction: column;
             justify-content: flex-start; 
             align-items: flex-start;
+            font-family: 'Noto Sans JP', sans-serif;
             text-align: left;
-            z-index: 10; /* 手前 */
-        }
-
-        /* 裏面 (ロゴ面: タップで表示) */
-        .card-back {
-            background-color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: rotateY(180deg);
-            z-index: 1; /* 奥 */
-            pointer-events: none; /* 裏側にある時は操作させない */
+            pointer-events: none;
         }
 
         .glare {
@@ -118,7 +120,7 @@
             mix-blend-mode: overlay;
             opacity: var(--glare-opacity);
             pointer-events: none;
-            z-index: 20;
+            z-index: 10;
         }
 
         .hologram {
@@ -140,7 +142,7 @@
             background-position: var(--bg-x) var(--bg-y);
             background-size: 200% 200%;
             pointer-events: none;
-            z-index: 19;
+            z-index: 9;
         }
 
         .lot-logo {
@@ -193,6 +195,8 @@
         
         #website-qrcode img {
             display: block;
+            width: 64px;
+            height: 64px;
         }
 
         /* モーダル共通 */
@@ -392,7 +396,7 @@
 
     <!-- カード全体 -->
     <div id="card" class="card-container">
-        <!-- 表面 (情報面: ここをデフォルトにするため card-front クラスに情報HTMLを移動) -->
+        <!-- 表面 (情報面: デフォルト) 白背景 -->
         <div class="card-face card-front text-gray-900">
             <div class="hologram"></div>
             <div class="glare"></div>
@@ -440,13 +444,15 @@
             </div>
 
             <!-- Webサイト QRコード -->
-            <div id="website-qrcode"></div>
+            <div id="website-qrcode">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://lot-website-one.vercel.app/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcAOhmLpleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeitqLvUvbzcP6wkM5lW5c9K8Nv2N4q3O4I4_734HD7145RzZdhzscwDCaMFA_aem_9EgBxT17D_QUkwHCjBUt8A" alt="WebサイトQRコード">
+            </div>
 
             <!-- 下部の黄色いライン -->
             <div class="absolute bottom-0 left-0 w-full h-5 bg-yellow-400 z-20"></div>
         </div>
 
-        <!-- 裏面 (ロゴ面: 初期状態では隠れている) -->
+        <!-- 裏面 (ロゴ面: タップで表示) 黒背景 -->
         <div class="card-face card-back">
             <div class="hologram"></div>
             <div class="glare"></div>
@@ -579,15 +585,4 @@
                     - 資格: 東京都デジタルサービス局 東京スマホサポーター登録済み。
                     - 経験: 茨城県境町でボランティアのスマホ教室を開催。
                     - ガジェット愛: 毎年携帯電話を買い替えるほどスマホが好き。現在はGoogle Pixel（Android）ユーザー。
-                    - エピソード: 祖母にスマホの使い方を教えたり、交流会で保育士にAIを使った資料作りを教えて喜ばれた経験あり。
-                    - 趣味: 週に3から4回ジムに通っている。
-
-                    【ルール】
-                    - 回答は短く簡潔に（200文字以内推奨）。
-                    - 絵文字を適度に使って ✨
-                    - スマホの使い方やAI活用術について聞かれたら、専門家としてアドバイスする。
-                    - 建設業の話は聞かれない限りは自分からはあまりせず、スマホ講師やAIプランナーとしての側面を強調する。
-                    - HTMLやMarkdownは使わず、プレーンテキストで答えること（箇条書きはOK）。
-                `;
-
-                const response =
+                    - エピソード: 
